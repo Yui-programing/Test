@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.image.ImageView?>
+<HBox xmlns="http://javafx.com/javafx/21"
+    xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.musicfinder.controller.MainLayoutController" stylesheets="@css/app.css" styleClass="app-root">
+
+    <VBox prefWidth="208" minWidth="208" maxWidth="208" styleClass="sidebar">
+        <padding>
+            <Insets top="28" right="14" bottom="22" left="14"/>
+        </padding>
+
+        <HBox spacing="9" alignment="CENTER_LEFT" styleClass="brand-row">
+            <StackPane prefWidth="38" prefHeight="38" maxWidth="38" maxHeight="38" styleClass="logo-box">
+                <Label text="▰▰" styleClass="logo-symbol"/>
+            </StackPane>
+            <Label text="musicfinder." styleClass="brand-name"/>
+        </HBox>
+
+        <Label text="YOUR SPACE" styleClass="sidebar-section-label">
+            <VBox.margin>
+                <Insets top="34" bottom="10" left="12"/>
+            </VBox.margin>
+        </Label>
+
+        <Button fx:id="homeButton" text="Home" graphicTextGap="12" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handleHome" styleClass="nav-button">
+            <graphic>
+                <Group scaleX="0.68" scaleY="0.68">
+                    <SVGPath content="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z M9 22V12h6v10" styleClass="nav-icon"/>
+                </Group>
+            </graphic>
+        </Button>
+
+        <Button fx:id="searchButton" text="Search" graphicTextGap="12" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handleSearch" styleClass="nav-button">
+            <graphic>
+                <Group scaleX="0.68" scaleY="0.68">
+                    <SVGPath content="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16z M21 21l-4.3-4.3" styleClass="nav-icon"/>
+                </Group>
+            </graphic>
+        </Button>
+
+        <Button fx:id="artistsButton" text="Artists" graphicTextGap="12" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handleArtists" styleClass="nav-button">
+            <graphic>
+                <Group scaleX="0.68" scaleY="0.68">
+                    <SVGPath content="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2 M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z M22 21v-2a4 4 0 0 0-3-3.87 M16 3.13a4 4 0 0 1 0 7.75" styleClass="nav-icon"/>
+                </Group>
+            </graphic>
+        </Button>
+
+        <Button fx:id="playlistsButton" text="My Playlists" graphicTextGap="12" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handlePlaylists" styleClass="nav-button">
+            <graphic>
+                <Group scaleX="0.68" scaleY="0.68">
+                    <SVGPath content="M11 12H3 M16 6H3 M16 18H3 M18 9v6 M21 12h-6" styleClass="nav-icon"/>
+                </Group>
+            </graphic>
+        </Button>
+
+        <HBox alignment="CENTER_LEFT" styleClass="nav-row">
+            <Button fx:id="favoritesButton" text="Favorites" graphicTextGap="12" maxWidth="Infinity" alignment="CENTER_LEFT" HBox.hgrow="ALWAYS" onAction="#handleFavorites" styleClass="nav-button">
+                <graphic>
+                    <Group scaleX="0.68" scaleY="0.68">
+                        <SVGPath content="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7z" styleClass="nav-icon"/>
+                    </Group>
+                </graphic>
+            </Button>
+            <Label fx:id="favoriteCountLabel" text="" styleClass="count-badge"/>
+        </HBox>
+
+        <Button fx:id="historyButton" text="Search History" graphicTextGap="12" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handleHistory" styleClass="nav-button">
+            <graphic>
+                <Group scaleX="0.68" scaleY="0.68">
+                    <SVGPath content="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z M12 6v6l4 2" styleClass="nav-icon"/>
+                </Group>
+            </graphic>
+        </Button>
+
+        <Button fx:id="trendingButton" text="Trending" graphicTextGap="12" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handleTrending" styleClass="nav-button">
+            <graphic>
+                <Group scaleX="0.68" scaleY="0.68">
+                    <SVGPath content="M22 7l-8.5 8.5-5-5L2 17 M16 7h6v6" styleClass="nav-icon"/>
+                </Group>
+            </graphic>
+        </Button>
+
+        <Button fx:id="profileButton" text="Profile" graphicTextGap="12" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handleProfile" styleClass="nav-button">
+            <graphic>
+                <Group scaleX="0.68" scaleY="0.68">
+                    <SVGPath content="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2 M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" styleClass="nav-icon"/>
+                </Group>
+            </graphic>
+        </Button>
+
+        <Region VBox.vgrow="ALWAYS"/>
+
+        <VBox spacing="7" styleClass="sidebar-promo">
+            <StackPane prefWidth="32" prefHeight="32" maxWidth="32" maxHeight="32" styleClass="promo-icon-box">
+                <Group scaleX="0.8" scaleY="0.8">
+                    <SVGPath content="M9 18V5l12-2v13 M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0z M21 16a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" styleClass="promo-svg"/>
+                </Group>
+            </StackPane>
+            <Label text="THE SOUND OF YOU" styleClass="promo-eyebrow"/>
+            <Label text="Find your next favorite." styleClass="promo-title"/>
+            <Button text="Explore music  →" onAction="#handleSearch" styleClass="promo-link"/>
+        </VBox>
+
+        <Button text="Settings" graphicTextGap="12" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handleSettings" styleClass="nav-button, bottom-nav">
+            <graphic>
+                <Group scaleX="0.68" scaleY="0.68">
+                    <SVGPath content="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" styleClass="nav-icon"/>
+                </Group>
+            </graphic>
+            <VBox.margin>
+                <Insets top="14"/>
+            </VBox.margin>
+        </Button>
+
+        <Button text="Log out" graphicTextGap="12" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handleLogout" styleClass="nav-button, bottom-nav">
+            <graphic>
+                <Group scaleX="0.68" scaleY="0.68">
+                    <SVGPath content="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4 M16 17l5-5-5-5 M21 12H9" styleClass="nav-icon"/>
+                </Group>
+            </graphic>
+        </Button>
+    </VBox>
+
+    <BorderPane HBox.hgrow="ALWAYS" styleClass="main-shell">
+        <top>
+            <HBox alignment="CENTER_LEFT" prefHeight="64" minHeight="64" styleClass="topbar">
+                <padding>
+                    <Insets top="0" right="28" bottom="0" left="32"/>
+                </padding>
+                <Label text="MUSIC FINDER" styleClass="topbar-muted"/>
+                <Label text="/" styleClass="topbar-slash"/>
+                <Label fx:id="currentPageLabel" text="" styleClass="topbar-current"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <HBox alignment="CENTER" spacing="6" styleClass="server-pill">
+                    <Label text="●" styleClass="server-dot"/>
+                    <Label fx:id="serverStatusLabel" text="" styleClass="server-text"/>
+                </HBox>
+                <Separator orientation="VERTICAL" prefHeight="22" styleClass="top-separator"/>
+                <StackPane prefWidth="34" prefHeight="34" maxWidth="34" maxHeight="34" styleClass="avatar-small">
+                    <Label fx:id="avatarInitialLabel" text="" styleClass="avatar-small-text"/>
+                </StackPane>
+            </HBox>
+        </top>
+
+        <center>
+            <StackPane fx:id="contentContainer" styleClass="content-container"/>
+        </center>
+
+        <bottom>
+
+            <HBox fx:id="nowPlayingBar" alignment="CENTER_LEFT" prefHeight="78" minHeight="78" visible="false" managed="false" styleClass="now-playing-bar">
+
+                <!-- ================= LEFT: SONG INFO ================= -->
+
+                <HBox alignment="CENTER_LEFT" spacing="12" prefWidth="320" minWidth="260" styleClass="now-playing-info">
+
+                    <ImageView fx:id="nowPlayingImage" fitWidth="52" fitHeight="52" preserveRatio="false" styleClass="now-playing-cover"/>
+
+                    <VBox spacing="4" alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+
+                        <Label fx:id="nowPlayingTitle" text="Song title" maxWidth="220" styleClass="now-playing-title"/>
+
+                        <Label fx:id="nowPlayingArtist" text="Artist" maxWidth="220" styleClass="now-playing-artist"/>
+
+                    </VBox>
+
+                </HBox>
+
+
+                <!-- ================= CENTER CONTROLS ================= -->
+
+                <Region HBox.hgrow="ALWAYS"/>
+
+                <HBox alignment="CENTER" spacing="18" styleClass="now-playing-controls">
+
+                    <!-- PREVIOUS -->
+
+                    <Button onAction="#handlePreviousSong" styleClass="player-control-btn">
+
+                        <graphic>
+                            <Group scaleX="0.72" scaleY="0.72">
+
+                                <SVGPath content="M19 20L9 12l10-8v16z M5 19V5" styleClass="player-control-icon"/>
+
+                            </Group>
+                        </graphic>
+
+                    </Button>
+
+
+                    <!-- PLAY / PAUSE -->
+
+                    <Button fx:id="playPauseButton" onAction="#handlePlayPause" styleClass="player-play-btn">
+
+                        <graphic>
+
+                            <Group fx:id="pauseIcon" scaleX="0.75" scaleY="0.75">
+
+                                <SVGPath content="M7 5h4v14H7z M13 5h4v14h-4z" styleClass="player-play-icon"/>
+
+                            </Group>
+
+                        </graphic>
+
+                    </Button>
+
+
+                    <!-- NEXT -->
+
+                    <Button onAction="#handleNextSong" styleClass="player-control-btn">
+
+                        <graphic>
+                            <Group scaleX="0.72" scaleY="0.72">
+
+                                <SVGPath content="M5 4l10 8-10 8V4z M19 5v14" styleClass="player-control-icon"/>
+
+                            </Group>
+                        </graphic>
+
+                    </Button>
+
+                </HBox>
+
+
+                <Region HBox.hgrow="ALWAYS"/>
+
+
+                <!-- ================= RIGHT ================= -->
+
+                <!-- giữ cân đối với phần info bên trái -->
+
+                <Region prefWidth="320" minWidth="260"/>
+
+            </HBox>
+
+        </bottom>
+    </BorderPane>
+</HBox>

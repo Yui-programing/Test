@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<ScrollPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.musicfinder.controller.ProfileController" stylesheets="@css/profile.css" fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" styleClass="content-scroll">
+                <content>
+                    <VBox spacing="22" styleClass="page-content">
+                        <padding><Insets top="34" right="36" bottom="36" left="36"/></padding>
+
+                        <HBox alignment="BOTTOM_LEFT">
+                            <VBox spacing="5">
+                                <Label text="YOUR ACCOUNT / PROFILE" styleClass="eyebrow"/>
+                                <Label text="My profile" styleClass="page-title"/>
+                                <Label text="A little bit about you and your music." styleClass="page-subtitle"/>
+                            </VBox>
+                            <Region HBox.hgrow="ALWAYS"/>
+                            <Button text="Edit profile" graphicTextGap="9" onAction="#handleEditProfile" styleClass="secondary-button"><graphic><Group scaleX="0.6" scaleY="0.6"><SVGPath content="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z M15 5l4 4" styleClass="btn-svg"/></Group></graphic></Button>
+                        </HBox>
+
+                        <Label fx:id="profileMessageLabel" text="" styleClass="profile-message"/>
+
+                        <HBox alignment="CENTER_LEFT" spacing="24" styleClass="profile-hero">
+                            <StackPane prefWidth="84" prefHeight="84" minWidth="84" minHeight="84" maxWidth="84" maxHeight="84" styleClass="avatar-large">
+                                <Label text="" styleClass="avatar-large-text"/>
+                            </StackPane>
+                            <VBox spacing="5" alignment="CENTER_LEFT">
+                                <Label text="MUSIC FINDER MEMBER" styleClass="hero-eyebrow"/>
+                                <Label text="" styleClass="hero-name"/>
+                                <Label text="" styleClass="hero-subtitle"/>
+                            </VBox>
+                        </HBox>
+
+                        <HBox spacing="18">
+                            <VBox spacing="16" HBox.hgrow="ALWAYS" styleClass="info-card">
+                                <Label text="Personal information" styleClass="card-title"/>
+
+                                <VBox spacing="5" styleClass="info-row">
+                                    <Label text="FULL NAME" styleClass="info-label"/>
+                                    <Label text="" styleClass="info-value"/>
+                                </VBox>
+                                <Separator styleClass="info-separator"/>
+
+                                <VBox spacing="5" styleClass="info-row">
+                                    <Label text="USERNAME" styleClass="info-label"/>
+                                    <Label text="" styleClass="info-value"/>
+                                </VBox>
+                                <Separator styleClass="info-separator"/>
+
+                                <VBox spacing="5" styleClass="info-row">
+                                    <Label text="EMAIL ADDRESS" styleClass="info-label"/>
+                                    <Label text="" styleClass="info-value"/>
+                                </VBox>
+                                <Separator styleClass="info-separator"/>
+
+                                <Button text="Change password" graphicTextGap="9" onAction="#handleChangePassword" styleClass="secondary-button, change-password-button"><graphic><Group scaleX="0.6" scaleY="0.6"><SVGPath content="M5 11h14a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2z M7 11V7a5 5 0 0 1 10 0v4" styleClass="btn-svg"/></Group></graphic></Button>
+                            </VBox>
+
+                            <VBox spacing="16" prefWidth="420" minWidth="340" styleClass="info-card, numbers-card">
+                                <Label text="Your music in numbers" styleClass="card-title"/>
+
+                                <HBox alignment="CENTER_LEFT" spacing="14" styleClass="number-row">
+                                    <StackPane prefWidth="40" prefHeight="40" minWidth="40" minHeight="40" maxWidth="40" maxHeight="40" styleClass="number-icon, icon-search">
+                                        <Group scaleX="0.7" scaleY="0.7"><SVGPath content="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16z M21 21l-4.3-4.3" styleClass="num-svg"/></Group>
+                                    </StackPane>
+                                    <VBox spacing="2">
+                                        <Label text="" styleClass="number-value"/>
+                                        <Label text="Total searches" styleClass="number-caption"/>
+                                    </VBox>
+                                </HBox>
+                                <Separator styleClass="info-separator"/>
+
+                                <HBox alignment="CENTER_LEFT" spacing="14" styleClass="number-row">
+                                    <StackPane prefWidth="40" prefHeight="40" minWidth="40" minHeight="40" maxWidth="40" maxHeight="40" styleClass="number-icon, icon-heart">
+                                        <Group scaleX="0.7" scaleY="0.7"><SVGPath content="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7z" styleClass="num-svg"/></Group>
+                                    </StackPane>
+                                    <VBox spacing="2">
+                                        <Label text="" styleClass="number-value"/>
+                                        <Label text="Favorite songs" styleClass="number-caption"/>
+                                    </VBox>
+                                </HBox>
+                                <Separator styleClass="info-separator"/>
+
+                                <HBox alignment="CENTER_LEFT" spacing="14" styleClass="number-row">
+                                    <StackPane prefWidth="40" prefHeight="40" minWidth="40" minHeight="40" maxWidth="40" maxHeight="40" styleClass="number-icon, icon-playlist">
+                                        <Group scaleX="0.7" scaleY="0.7"><SVGPath content="M11 12H3 M16 6H3 M16 18H3 M18 9v6 M21 12h-6" styleClass="num-svg"/></Group>
+                                    </StackPane>
+                                    <VBox spacing="2">
+                                        <Label text="" styleClass="number-value"/>
+                                        <Label text="Playlists created" styleClass="number-caption"/>
+                                    </VBox>
+                                </HBox>
+                            </VBox>
+                        </HBox>
+                    </VBox>
+                </content>
+            </ScrollPane>

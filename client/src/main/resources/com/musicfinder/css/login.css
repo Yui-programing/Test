@@ -1,0 +1,137 @@
+.root-pane {
+    -fx-background-color: #0d0c12;
+    -fx-font-family: "Segoe UI", "Arial";
+}
+
+/* ---------- LEFT BRAND ---------- */
+.brand-pane {
+    -fx-background-color: linear-gradient(to bottom right, #111017 0%, #171021 52%, #25143a 100%);
+    -fx-border-color: transparent rgba(181, 138, 255, 0.12) transparent transparent;
+    -fx-border-width: 0 1 0 0;
+}
+.glow { -fx-opacity: 1; }
+.glow-purple { -fx-fill: radial-gradient(center 50% 50%, radius 50%, rgba(140, 90, 255, 0.34), rgba(140, 90, 255, 0.0)); }
+.glow-pink { -fx-fill: radial-gradient(center 50% 50%, radius 50%, rgba(224, 120, 200, 0.22), rgba(224, 120, 200, 0.0)); }
+.glow-purple-soft { -fx-fill: radial-gradient(center 50% 50%, radius 50%, rgba(140, 90, 255, 0.16), rgba(140, 90, 255, 0.0)); }
+.deco-ring { -fx-fill: transparent; -fx-stroke: rgba(196, 160, 255, 0.10); -fx-stroke-width: 1; }
+
+.logo-box {
+    -fx-background-color: linear-gradient(to bottom right, #8f62ff, #b98aff);
+    -fx-background-radius: 14;
+    -fx-effect: dropshadow(gaussian, rgba(142, 91, 255, 0.45), 20, 0.25, 0, 6);
+}
+.logo-svg { -fx-fill: #16111f; -fx-scale-x: 1.25; -fx-scale-y: 1.25; }
+.brand-name { -fx-text-fill: #ffffff; -fx-font-size: 24px; -fx-font-weight: 800; }
+
+.hero-title { -fx-text-fill: #ffffff; -fx-font-size: 44px; -fx-font-weight: 700; }
+.hero-title-accent { -fx-text-fill: linear-gradient(to right, #b88cff, #ec9be0); }
+.hero-description { -fx-text-fill: #aaa3b9; -fx-font-size: 14px; -fx-line-spacing: 5px; }
+
+.feature-chip {
+    -fx-background-color: rgba(255, 255, 255, 0.05);
+    -fx-border-color: rgba(190, 150, 255, 0.20);
+    -fx-border-radius: 18;
+    -fx-background-radius: 18;
+    -fx-padding: 7 13 7 11;
+}
+.chip-svg { -fx-fill: transparent; -fx-stroke: #c9a4ff; -fx-stroke-width: 2.2; -fx-stroke-line-cap: round; -fx-stroke-line-join: round; }
+.chip-text { -fx-text-fill: #ddd3ee; -fx-font-size: 12px; -fx-font-weight: 600; }
+
+.collage-cover {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.55), 16, 0.22, 0, 7);
+}
+.collage-front { -fx-effect: dropshadow(gaussian, rgba(160, 110, 255, 0.45), 20, 0.25, 0, 8); }
+.now-card {
+    -fx-background-color: rgba(30, 20, 44, 0.78);
+    -fx-border-color: rgba(190, 150, 255, 0.18);
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-padding: 12 16 12 16;
+}
+.now-eyebrow { -fx-text-fill: #a283c4; -fx-font-size: 9px; -fx-font-weight: 800; }
+.now-title { -fx-text-fill: #ffffff; -fx-font-size: 14px; -fx-font-weight: 700; }
+.now-sub { -fx-text-fill: #9a90a8; -fx-font-size: 12px; }
+
+.hero-small { -fx-text-fill: #c5bfd1; -fx-font-size: 12px; -fx-font-weight: 600; }
+.status-dot { -fx-text-fill: #b58aff; -fx-font-size: 11px; }
+
+/* ---------- RIGHT FORM ---------- */
+.form-side { -fx-background-color: #0f0e14; }
+
+.login-card {
+    -fx-background-color: #17151d;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-border-color: #2c2836;
+    -fx-border-width: 1;
+    -fx-padding: 42 38 38 38;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 40, 0.2, 0, 18);
+}
+.eyebrow { -fx-text-fill: #a67cff; -fx-font-size: 10px; -fx-font-weight: 800; -fx-letter-spacing: 2px; }
+.login-title { -fx-text-fill: #ffffff; -fx-font-size: 32px; -fx-font-weight: 600; }
+.login-subtitle { -fx-text-fill: #9a94a8; -fx-font-size: 13px; }
+.field-label { -fx-text-fill: #a9a3b3; -fx-font-size: 10px; -fx-font-weight: 700; -fx-letter-spacing: 1.1px; }
+
+.input-wrap {
+    -fx-background-color: #111016;
+    -fx-border-color: #2d2934;
+    -fx-border-width: 1;
+    -fx-border-radius: 11;
+    -fx-background-radius: 11;
+    -fx-padding: 0 8 0 14;
+    -fx-min-height: 48;
+    -fx-pref-height: 48;
+}
+.input-wrap:hover { -fx-border-color: #433b52; }
+.input-wrap:focused-within {
+    -fx-border-color: #a777ff;
+    -fx-background-color: #14121b;
+    -fx-effect: dropshadow(gaussian, rgba(160, 112, 255, 0.22), 12, 0.2, 0, 0);
+}
+.input-svg { -fx-fill: transparent; -fx-stroke: #7f7790; -fx-stroke-width: 2; -fx-stroke-line-cap: round; -fx-stroke-line-join: round; }
+.input-wrap:focused-within .input-svg { -fx-stroke: #bf97ff; }
+
+.form-input,
+.form-input:focused {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-text-fill: #f7f5fb;
+    -fx-prompt-text-fill: #625d6b;
+    -fx-border-color: transparent;
+    -fx-padding: 0 4 0 2;
+    -fx-pref-height: 46px;
+    -fx-font-size: 13px;
+    -fx-highlight-fill: #6f4bc4;
+}
+.eye-button { -fx-background-color: transparent; -fx-padding: 6 8 6 8; -fx-cursor: hand; -fx-background-radius: 8; }
+.eye-button:hover { -fx-background-color: rgba(255, 255, 255, 0.06); }
+.eye-button:hover .input-svg { -fx-stroke: #d0b5ff; }
+
+.remember-check { -fx-text-fill: #aaa4b5; -fx-font-size: 12px; }
+.remember-check .box { -fx-background-color: #111016; -fx-border-color: #4a4354; -fx-border-radius: 4; -fx-background-radius: 4; }
+.remember-check:selected .box { -fx-background-color: #9d72f3; -fx-border-color: #9d72f3; }
+.remember-check:selected .mark { -fx-background-color: #ffffff; }
+
+.text-link, .create-link { -fx-text-fill: #b78cff; -fx-font-size: 12px; -fx-border-color: transparent; -fx-padding: 0; }
+.text-link:hover, .create-link:hover { -fx-text-fill: #d0b5ff; -fx-underline: true; }
+
+.primary-button {
+    -fx-background-color: linear-gradient(to right, #9a6cf6, #c08fff);
+    -fx-text-fill: #17111e;
+    -fx-font-size: 14px;
+    -fx-font-weight: 800;
+    -fx-background-radius: 11;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(160, 112, 255, 0.28), 16, 0.15, 0, 6);
+}
+.primary-button:hover {
+    -fx-background-color: linear-gradient(to right, #a77aff, #cb9fff);
+    -fx-effect: dropshadow(gaussian, rgba(172, 123, 255, 0.42), 20, 0.2, 0, 7);
+}
+.primary-button:pressed { -fx-opacity: 0.86; }
+.btn-arrow { -fx-fill: transparent; -fx-stroke: #17111e; -fx-stroke-width: 2.4; -fx-stroke-line-cap: round; -fx-stroke-line-join: round; }
+
+.bottom-text { -fx-text-fill: #8e8998; -fx-font-size: 12px; }
+.message-label { -fx-font-size: 12px; }
+.message-success { -fx-text-fill: #73d9a1; }
+.message-error { -fx-text-fill: #ff7e9f; }

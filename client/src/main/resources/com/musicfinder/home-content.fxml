@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<ScrollPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.musicfinder.controller.HomeController" stylesheets="@css/home.css" fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" styleClass="content-scroll">
+                <content>
+                    <VBox spacing="24" styleClass="page-content">
+                        <padding>
+                            <Insets top="34" right="32" bottom="36" left="32"/>
+                        </padding>
+
+                        <!-- HERO -->
+                        <HBox minHeight="190" prefHeight="190" maxHeight="190" styleClass="hero-card">
+                            <padding>
+                                <Insets top="22" right="30" bottom="22" left="34"/>
+                            </padding>
+                            <VBox spacing="7" alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+                                <Label text="●  FEATURED DISCOVERY" styleClass="hero-badge"/>
+                                <Label text="Feel everything.\nFind your sound." styleClass="hero-heading"/>
+                                <Label text="From the songs you know by heart to the ones you haven’t met yet. Your next discovery starts here." wrapText="true" maxWidth="440" styleClass="hero-copy"/>
+                                <Button text="Explore songs  →" onAction="#handleExplore" styleClass="hero-button"/>
+                            </VBox>
+                            <StackPane prefWidth="330" minWidth="300" maxHeight="190" styleClass="hero-art-area">
+                                <StackPane prefWidth="270" prefHeight="270" maxWidth="270" maxHeight="270" styleClass="vinyl-ring, vinyl-ring-outer"/>
+                                <StackPane prefWidth="210" prefHeight="210" maxWidth="210" maxHeight="210" styleClass="vinyl-ring, vinyl-ring-inner"/>
+                                </StackPane>
+                        </HBox>
+
+                        <!-- SEARCH -->
+                        <HBox alignment="CENTER_LEFT" spacing="10" styleClass="home-search-bar">
+                            <Group scaleX="0.75" scaleY="0.75"><SVGPath content="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16z M21 21l-4.3-4.3" styleClass="field-icon"/></Group>
+                            <TextField fx:id="searchField" promptText="Search for songs or Vietnamese artists..." onAction="#handleSearch" HBox.hgrow="ALWAYS" styleClass="home-search-field"/>
+                            <Button text="Search   →" onAction="#handleSearch" styleClass="search-button"/>
+                        </HBox>
+                        <Label fx:id="homeMessageLabel" text="" styleClass="home-message"/>
+
+                        <!-- RECENT -->
+                        <HBox alignment="CENTER_LEFT">
+                            <VBox spacing="2">
+                                <Label text="Recently searched" styleClass="section-title"/>
+                                <Label text="Pick up where you left off" styleClass="section-subtitle"/>
+                            </VBox>
+                            <Region HBox.hgrow="ALWAYS"/>
+                            <Button text="View history  →" onAction="#handleGoSearchHistory" styleClass="section-link"/>
+                        </HBox>
+
+                        <HBox spacing="14">
+                            </HBox>
+
+                        <!-- POPULAR + ARTISTS -->
+                        <HBox spacing="18">
+                            <VBox spacing="10" HBox.hgrow="ALWAYS">
+                                <HBox alignment="CENTER_LEFT">
+                                    <VBox spacing="2">
+                                        <Label text="Popular right now" styleClass="section-title"/>
+                                        <Label text="What everyone is looking for" styleClass="section-subtitle"/>
+                                    </VBox>
+                                    <Region HBox.hgrow="ALWAYS"/>
+                                    <Button text="See all  →" onAction="#handleNavPlaceholder" styleClass="section-link"/>
+                                </HBox>
+                                <VBox styleClass="popular-list">
+                                    </VBox>
+                            </VBox>
+
+                            <VBox spacing="10" prefWidth="420" minWidth="360">
+                                <HBox alignment="CENTER_LEFT">
+                                    <VBox spacing="2">
+                                        <Label text="Trending artists" styleClass="section-title"/>
+                                        <Label text="Artists making waves" styleClass="section-subtitle"/>
+                                    </VBox>
+                                    <Region HBox.hgrow="ALWAYS"/>
+                                    <Button text="Explore artists  →" onAction="#handleGoToArtists" styleClass="section-link"/>
+                                </HBox>
+                                <HBox spacing="9">
+                                    </HBox>
+                            </VBox>
+                        </HBox>
+
+                        <!-- RECOMMENDED -->
+                        <HBox alignment="CENTER_LEFT">
+                            <VBox spacing="2">
+                                <Label text="Recommended for you" styleClass="section-title"/>
+                                <Label text="Inspired by your recent searches" styleClass="section-subtitle"/>
+                            </VBox>
+                            <Region HBox.hgrow="ALWAYS"/>
+                            <Button text="Search more  →" onAction="#handleGoToSearch" styleClass="section-link"/>
+                        </HBox>
+
+                        <HBox spacing="14">
+                            </HBox>
+                    </VBox>
+                </content>
+            </ScrollPane>

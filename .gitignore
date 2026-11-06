@@ -1,0 +1,31 @@
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Maven / Java build
+**/target/
+*.class
+
+# Environment / secrets
+.env
+*.local.properties
+server/src/main/resources/application.properties
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
+tasks/
+
+# Local tools & binaries
+tools/
+graphify-out/
+*.exe
+
+# File audio tải trên server
+storage/

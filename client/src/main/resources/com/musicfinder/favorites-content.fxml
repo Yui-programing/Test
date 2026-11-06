@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.musicfinder.controller.FavoritesController" stylesheets="@css/favorites.css" spacing="24" styleClass="page-content">
+                <padding><Insets top="34" right="36" bottom="36" left="36"/></padding>
+
+                <HBox alignment="BOTTOM_LEFT">
+                    <VBox spacing="5">
+                        <Label text="YOUR LIBRARY / FAVORITES" styleClass="eyebrow"/>
+                        <Label text="Favorite songs" styleClass="page-title"/>
+                        <Label text="The songs you love, always close by." styleClass="page-subtitle"/>
+                    </VBox>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <HBox alignment="CENTER" spacing="7" styleClass="favorite-count-pill">
+                        <Group scaleX="0.55" scaleY="0.55"><SVGPath content="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7z" styleClass="pill-heart-svg"/></Group>
+                        <Label text="" styleClass="favorite-count-text"/>
+                    </HBox>
+                </HBox>
+
+                <Label fx:id="favoriteMessageLabel" text="" wrapText="true" styleClass="favorite-message"/>
+
+                <VBox styleClass="song-table">
+                    <HBox alignment="CENTER_LEFT" styleClass="table-header">
+                        <Label text="#" prefWidth="42" styleClass="header-label"/>
+                        <Label text="SONG" HBox.hgrow="ALWAYS" maxWidth="Infinity" styleClass="header-label, song-column"/>
+                        <Label text="ALBUM" prefWidth="240" styleClass="header-label"/>
+                        <Label text="DURATION" prefWidth="90" styleClass="header-label"/>
+                        <Label text="ACTIONS" prefWidth="130" styleClass="header-label"/>
+                    </HBox>
+
+                    </VBox>
+
+                <Region VBox.vgrow="ALWAYS"/>
+            </VBox>
