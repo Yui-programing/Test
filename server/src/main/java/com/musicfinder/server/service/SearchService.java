@@ -195,7 +195,7 @@ public class SearchService {
     }
 
     public SongData detail(Long id, String externalId) {
-        if (externalId != null && !externalId.isBlank())
+        if ((id == null || id <= 0) && externalId != null && !externalId.isBlank())
             id = ensureSong(externalId);
         if (id == null || id <= 0)
             throw new IllegalArgumentException("ID bài hát không hợp lệ");
@@ -215,8 +215,12 @@ public class SearchService {
         }
 
         SongData song = getSong(id);
-        if (song.video_url() == null || !song.video_url().startsWith("https://www.youtube.com/watch?v="))
-            throw new IllegalArgumentException("Bài hát chưa có nguồn YouTube");
+        if (song.audio_url() != null && !song.audio_url().isBlank()) {
+            return song;
+        }
+        if (song.video_url() == null || !song.video_url().startsWith("https://www.youtube.com/watch?v=")) {
+            return song;
+        }
         String videoId = song.video_url().replace("https://www.youtube.com/watch?v=", "");
 
         if (apiService.downloadAudioToCache(videoId) == null)

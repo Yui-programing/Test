@@ -39,8 +39,8 @@
                             <Label text="Discover artists making their mark" styleClass="section-subtitle"/>
                         </VBox>
 
-                        <VBox spacing="14">
-                            </VBox>
+                        <VBox fx:id="artistsContainer" spacing="14">
+                        </VBox>
                     </VBox>
                 </content>
             </ScrollPane>

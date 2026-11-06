@@ -13,9 +13,13 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        ClientConnection
-                .getInstance()
-                .connect("localhost", 12345);
+        try {
+            ClientConnection
+                    .getInstance()
+                    .connect("localhost", 12345);
+        } catch (IOException e) {
+            System.err.println("Notice: Could not connect to server at startup (" + e.getMessage() + "). Will retry on demand.");
+        }
         Navigator.initialize(stage);
         Navigator.goTo(Screen.LOGIN);
 

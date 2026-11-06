@@ -4,6 +4,13 @@ import com.musicfinder.MainApp;
 import com.musicfinder.navigation.Navigator;
 import com.musicfinder.network.ClientConnection;
 import com.musicfinder.navigation.Screen;
+import com.musicfinder.player.AudioPlayerManager;
+import com.musicfinder.session.UserSession;
+import com.musicfinder.shared.enums.Action;
+import com.musicfinder.shared.request.Request;
+import com.musicfinder.shared.response.payload.GetFavoritesData;
+import com.musicfinder.shared.response.payload.UserData;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -89,6 +96,52 @@ public class MainLayoutController {
         navigationButtons.put(Screen.TRENDING, trendingButton);
         navigationButtons.put(Screen.PROFILE, profileButton);
         setServerConnected(ClientConnection.getInstance().isConnected());
+
+        // Cập nhật thông tin avatar khi có UserSession
+        UserSession.getInstance().addListener(this::updateUserInfo);
+        updateUserInfo(UserSession.getInstance().getCurrentUser());
+
+        // Lắng nghe trình phát nhạc
+        AudioPlayerManager player = AudioPlayerManager.getInstance();
+        player.addSongChangeListener(song -> {
+            if (song != null) {
+                String artist = song.artistNames() != null ? String.join(", ", song.artistNames()) : "Unknown";
+                showNowPlaying(song.title(), artist, song.thumbnail_url());
+            }
+        });
+        player.addPlayStateListener(this::setPlayingState);
+    }
+
+    private void updateUserInfo(UserData user) {
+        if (user != null) {
+            String name = user.fullName() != null && !user.fullName().isBlank()
+                    ? user.fullName()
+                    : user.userName();
+            if (name != null && !name.isBlank()) {
+                setAvatarInitials(name.substring(0, 1).toUpperCase());
+            }
+            refreshFavoritesCount();
+        } else {
+            setAvatarInitials("");
+            setFavoriteCount(0);
+        }
+    }
+
+    public void refreshFavoritesCount() {
+        if (!UserSession.getInstance().isLoggedIn()) return;
+        try {
+            Request req = Request.of(Action.GET_FAVORITES, null);
+            ClientConnection.getInstance().send(req, resp -> {
+                if (resp.isSuccess() && resp.getData() != null) {
+                    GetFavoritesData favs = resp.dataAs(GetFavoritesData.class);
+                    Platform.runLater(() -> {
+                        int count = favs != null && favs.songs() != null ? favs.songs().size() : 0;
+                        setFavoriteCount(count);
+                    });
+                }
+            });
+        } catch (Exception ignored) {
+        }
     }
 
     public void show(Screen screen) throws IOException {
@@ -162,11 +215,17 @@ public class MainLayoutController {
 
     @FXML
     private void handleSettings() {
-        // Settings screen is not implemented yet.
+        // Settings screen
     }
 
     @FXML
     private void handleLogout() throws IOException {
+        AudioPlayerManager.getInstance().stop();
+        try {
+            ClientConnection.getInstance().send(Request.of(Action.LOGOUT, null));
+        } catch (Exception ignored) {
+        }
+        UserSession.getInstance().clear();
         Navigator.goTo(Screen.LOGIN);
     }
 
@@ -183,7 +242,6 @@ public class MainLayoutController {
     }
 
     public void setPlayingState(boolean playing) {
-
         if (playing) {
             playPauseButton.setText("⏸");
         } else {
@@ -192,13 +250,14 @@ public class MainLayoutController {
     }
 
     public void showNowPlaying(String title, String artist, String thumbnailUrl) {
-
         nowPlayingTitle.setText(title);
         nowPlayingArtist.setText(artist);
 
         if (thumbnailUrl != null && !thumbnailUrl.isBlank()) {
-            nowPlayingImage.setImage(
-                    new Image(thumbnailUrl, true));
+            try {
+                nowPlayingImage.setImage(new Image(thumbnailUrl, true));
+            } catch (Exception ignored) {
+            }
         }
 
         nowPlayingBar.setVisible(true);
@@ -207,24 +266,16 @@ public class MainLayoutController {
 
     @FXML
     private void handleNextSong() {
-
-        if (searchController != null) {
-            searchController.handleNextSong();
-        }
+        AudioPlayerManager.getInstance().next();
     }
 
     @FXML
     private void handlePreviousSong() {
-
-        if (searchController != null) {
-            searchController.handlePreviousSong();
-        }
+        AudioPlayerManager.getInstance().previous();
     }
 
     @FXML
     private void handlePlayPause() {
-        if (searchController != null) {
-            searchController.handlePlayPause();
-        }
+        AudioPlayerManager.getInstance().togglePlayPause();
     }
 }

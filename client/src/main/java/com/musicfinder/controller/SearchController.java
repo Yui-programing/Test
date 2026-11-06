@@ -27,6 +27,12 @@ import javafx.scene.shape.SVGPath;
 import javafx.scene.control.OverrunStyle;
 import javafx.scene.layout.Region;
 
+import com.musicfinder.player.AudioPlayerManager;
+import com.musicfinder.session.UserSession;
+import com.musicfinder.shared.enums.PlayList_Type;
+import com.musicfinder.shared.request.payload.Add_RemoveToPlaylistPayload;
+import com.musicfinder.shared.response.payload.PlayListData;
+import javafx.scene.control.ChoiceDialog;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,15 +54,8 @@ public class SearchController {
     @FXML
     private Label resultSubtitleLabel;
 
-    // play song
-    private MediaPlayer mediaPlayer;
-
     private SongData currentSong;
-
-    private boolean isPlaying = false;
-
     private MainLayoutController mainLayoutController;
-
     private List<SongData> currentSongList = new ArrayList<>();
 
     private int currentSongIndex = -1;
@@ -69,6 +68,9 @@ public class SearchController {
     @FXML
     private void initialize() {
         searchMessageLabel.setText("");
+        AudioPlayerManager.getInstance().addStatusMessageListener(msg -> {
+            Platform.runLater(() -> showMessage(msg));
+        });
     }
 
     @FXML
@@ -248,212 +250,104 @@ public class SearchController {
     }
 
     private void handlePlaySong(SongData song) {
-
-        System.out.println(
-                "Clicked song: "
-                        + song.songID()
-                        + " - "
-                        + song.title()
-                        + " action: Play");
-
         currentSong = song;
-
-        String artists = song.artistNames() == null
-                ? "Unknown artist"
-                : String.join(", ", song.artistNames());
-
-        /*
-         * SearchController không tự đụng UI main-layout.
-         * Gửi dữ liệu sang MainLayoutController.
-         */
-        if (mainLayoutController != null) {
-
-            mainLayoutController.showNowPlaying(
-                    song.title(),
-                    artists,
-                    song.thumbnail_url());
-        }
-
-        playAudio(song);
+        AudioPlayerManager.getInstance().playSong(song, currentSongList);
     }
 
     private void handleAddToPlaylist(SongData song) {
-
-        System.out.println(
-                "Clicked song: "
-                        + song.songID()
-                        + " - "
-                        + song.title() + " action: playlist");
-    }
-
-    private void handlleAddToFavorite(SongData song) {
-
-        System.out.println(
-                "Clicked song: "
-                        + song.songID()
-                        + " - "
-                        + song.title() + "action: favorite");
-    }
-
-    private void playAudio(
-            SongData song) {
-
-        String audioUrl = song.audio_url();
-
-        // Nếu audio_url không có
-        // thử preview_url
-
-        if (audioUrl == null
-                || audioUrl.isBlank()) {
-
-            audioUrl = song.preview_url();
-        }
-
-        if (audioUrl == null
-                || audioUrl.isBlank()) {
-
-            System.out.println(
-                    "Song không có audio URL");
-
+        if (!UserSession.getInstance().isLoggedIn()) {
+            showMessage("Vui lòng đăng nhập để thêm bài hát vào danh sách phát.");
             return;
         }
 
         try {
+            Request getPlaylistsReq = Request.of(Action.GET_PLAYLISTS, null);
+            ClientConnection.getInstance().send(getPlaylistsReq, resp -> {
+                Platform.runLater(() -> {
+                    if (!resp.isSuccess() || resp.getData() == null) {
+                        showMessage("Không thể tải danh sách playlist: " + resp.getMessage());
+                        return;
+                    }
+                    PlayListData[] playlists = resp.dataAs(PlayListData[].class);
+                    if (playlists == null || playlists.length == 0) {
+                        showMessage("Bạn chưa có playlist nào. Hãy tạo playlist ở mục My Playlists.");
+                        return;
+                    }
 
-            // =========================
-            // DỪNG BÀI CŨ
-            // =========================
+                    List<PlayListData> choices = List.of(playlists);
+                    ChoiceDialog<PlayListData> dialog = new ChoiceDialog<>(choices.get(0), choices);
+                    dialog.setTitle("Thêm vào Playlist");
+                    dialog.setHeaderText("Chọn playlist muốn thêm bài hát: " + song.title());
+                    dialog.setContentText("Playlist:");
 
-            if (mediaPlayer != null) {
-
-                mediaPlayer.stop();
-                mediaPlayer.dispose();
-            }
-
-            // =========================
-            // TẠO MEDIA
-            // =========================
-
-            Media media = new Media(audioUrl);
-
-            mediaPlayer = new MediaPlayer(media);
-
-            // =========================
-            // KHI LOAD XONG
-            // =========================
-
-            mediaPlayer.setOnReady(() -> {
-
-                System.out.println(
-                        "Audio ready: "
-                                + song.title());
-
-                mediaPlayer.play();
-
-                isPlaying = true;
-                if (mainLayoutController != null) {
-                    mainLayoutController.setPlayingState(true);
-                }
+                    dialog.showAndWait().ifPresent(chosen -> {
+                        try {
+                            Add_RemoveToPlaylistPayload payload = new Add_RemoveToPlaylistPayload(
+                                    chosen.playlistID(),
+                                    song,
+                                    PlayList_Type.NORMAL
+                            );
+                            Request addReq = Request.of(Action.ADD_TO_PLAYLIST, payload);
+                            ClientConnection.getInstance().send(addReq, addResp -> {
+                                Platform.runLater(() -> {
+                                    if (addResp.isSuccess()) {
+                                        showMessage("Đã thêm bài hát vào playlist '" + chosen.name() + "'!");
+                                    } else {
+                                        showMessage(addResp.getMessage() != null ? addResp.getMessage() : "Thêm thất bại");
+                                    }
+                                });
+                            });
+                        } catch (Exception ex) {
+                            showMessage("Lỗi gửi yêu cầu thêm vào playlist: " + ex.getMessage());
+                        }
+                    });
+                });
             });
-
-            // =========================
-            // KHI PHÁT HẾT
-            // =========================
-
-            mediaPlayer.setOnEndOfMedia(() -> {
-
-                isPlaying = false;
-                if (mainLayoutController != null) {
-                    mainLayoutController.setPlayingState(true);
-                }
-            });
-
-            // =========================
-            // ERROR
-            // =========================
-
-            mediaPlayer.setOnError(() -> {
-
-                System.out.println(
-                        "MediaPlayer error: "
-                                + mediaPlayer
-                                        .getError());
-            });
-
         } catch (Exception e) {
+            showMessage("Lỗi kết nối tới server: " + e.getMessage());
+        }
+    }
 
-            System.out.println(
-                    "Cannot play audio: "
-                            + e.getMessage());
+    private void handlleAddToFavorite(SongData song) {
+        if (!UserSession.getInstance().isLoggedIn()) {
+            showMessage("Vui lòng đăng nhập để thêm bài hát yêu thích.");
+            return;
+        }
+
+        try {
+            Add_RemoveToPlaylistPayload payload = new Add_RemoveToPlaylistPayload(
+                    null,
+                    song,
+                    PlayList_Type.FAVORITES
+            );
+            Request req = Request.of(Action.ADD_FAVORITE, payload);
+            ClientConnection.getInstance().send(req, resp -> {
+                Platform.runLater(() -> {
+                    if (resp.isSuccess()) {
+                        showMessage("Đã thêm vào danh sách yêu thích: " + song.title());
+                        if (mainLayoutController != null) {
+                            mainLayoutController.refreshFavoritesCount();
+                        }
+                    } else {
+                        showMessage(resp.getMessage() != null ? resp.getMessage() : "Thêm yêu thích thất bại");
+                    }
+                });
+            });
+        } catch (Exception e) {
+            showMessage("Lỗi kết nối: " + e.getMessage());
         }
     }
 
     @FXML
     public void handlePlayPause() {
-
-        if (mediaPlayer == null) {
-            return;
-        }
-
-        if (isPlaying) {
-
-            mediaPlayer.pause();
-
-            isPlaying = false;
-            if (mainLayoutController != null) {
-                mainLayoutController.setPlayingState(true);
-            }
-
-        } else {
-
-            mediaPlayer.play();
-
-            isPlaying = true;
-            if (mainLayoutController != null) {
-                mainLayoutController.setPlayingState(true);
-            }
-        }
+        AudioPlayerManager.getInstance().togglePlayPause();
     }
 
     public void handleNextSong() {
-
-        if (currentSongList == null || currentSongList.isEmpty()) {
-            return;
-        }
-
-        if (currentSongIndex == -1) {
-            return;
-        }
-
-        currentSongIndex++;
-
-        if (currentSongIndex >= currentSongList.size()) {
-            currentSongIndex = 0;
-        }
-
-        SongData nextSong = currentSongList.get(currentSongIndex);
-
-        handlePlaySong(nextSong);
+        AudioPlayerManager.getInstance().next();
     }
 
     public void handlePreviousSong() {
-
-        if (currentSongList == null || currentSongList.isEmpty()) {
-            return;
-        }
-
-        if (currentSongIndex == -1) {
-            return;
-        }
-
-        currentSongIndex--;
-
-        if (currentSongIndex < 0) {
-            currentSongIndex = currentSongList.size() - 1;
-        }
-
-        SongData previousSong = currentSongList.get(currentSongIndex);
-
-        handlePlaySong(previousSong);
+        AudioPlayerManager.getInstance().previous();
     }
 }

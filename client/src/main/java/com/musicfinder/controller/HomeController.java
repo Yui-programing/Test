@@ -60,6 +60,11 @@ public class HomeController {
     }
 
     @FXML
+    private void handleGoToTrending() throws IOException {
+        Navigator.goTo(Screen.TRENDING);
+    }
+
+    @FXML
     private void handleNavPlaceholder() {
         homeMessageLabel.setText("This feature will be connected later.");
     }

@@ -33,12 +33,12 @@
 
                         <HBox alignment="CENTER_LEFT" spacing="24" styleClass="profile-hero">
                             <StackPane prefWidth="84" prefHeight="84" minWidth="84" minHeight="84" maxWidth="84" maxHeight="84" styleClass="avatar-large">
-                                <Label text="" styleClass="avatar-large-text"/>
+                                <Label fx:id="avatarLargeText" text="U" styleClass="avatar-large-text"/>
                             </StackPane>
                             <VBox spacing="5" alignment="CENTER_LEFT">
                                 <Label text="MUSIC FINDER MEMBER" styleClass="hero-eyebrow"/>
-                                <Label text="" styleClass="hero-name"/>
-                                <Label text="" styleClass="hero-subtitle"/>
+                                <Label fx:id="heroNameLabel" text="User" styleClass="hero-name"/>
+                                <Label fx:id="heroSubtitleLabel" text="Active listener" styleClass="hero-subtitle"/>
                             </VBox>
                         </HBox>
 
@@ -48,19 +48,19 @@
 
                                 <VBox spacing="5" styleClass="info-row">
                                     <Label text="FULL NAME" styleClass="info-label"/>
-                                    <Label text="" styleClass="info-value"/>
+                                    <Label fx:id="fullNameValueLabel" text="--" styleClass="info-value"/>
                                 </VBox>
                                 <Separator styleClass="info-separator"/>
 
                                 <VBox spacing="5" styleClass="info-row">
                                     <Label text="USERNAME" styleClass="info-label"/>
-                                    <Label text="" styleClass="info-value"/>
+                                    <Label fx:id="usernameValueLabel" text="--" styleClass="info-value"/>
                                 </VBox>
                                 <Separator styleClass="info-separator"/>
 
                                 <VBox spacing="5" styleClass="info-row">
                                     <Label text="EMAIL ADDRESS" styleClass="info-label"/>
-                                    <Label text="" styleClass="info-value"/>
+                                    <Label fx:id="emailValueLabel" text="--" styleClass="info-value"/>
                                 </VBox>
                                 <Separator styleClass="info-separator"/>
 
@@ -75,7 +75,7 @@
                                         <Group scaleX="0.7" scaleY="0.7"><SVGPath content="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16z M21 21l-4.3-4.3" styleClass="num-svg"/></Group>
                                     </StackPane>
                                     <VBox spacing="2">
-                                        <Label text="" styleClass="number-value"/>
+                                        <Label fx:id="totalSearchesValueLabel" text="0" styleClass="number-value"/>
                                         <Label text="Total searches" styleClass="number-caption"/>
                                     </VBox>
                                 </HBox>
@@ -86,7 +86,7 @@
                                         <Group scaleX="0.7" scaleY="0.7"><SVGPath content="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7z" styleClass="num-svg"/></Group>
                                     </StackPane>
                                     <VBox spacing="2">
-                                        <Label text="" styleClass="number-value"/>
+                                        <Label fx:id="favoriteSongsValueLabel" text="0" styleClass="number-value"/>
                                         <Label text="Favorite songs" styleClass="number-caption"/>
                                     </VBox>
                                 </HBox>
@@ -97,7 +97,12 @@
                                         <Group scaleX="0.7" scaleY="0.7"><SVGPath content="M11 12H3 M16 6H3 M16 18H3 M18 9v6 M21 12h-6" styleClass="num-svg"/></Group>
                                     </StackPane>
                                     <VBox spacing="2">
-                                        <Label text="" styleClass="number-value"/>
+                                        <Label fx:id="playlistsCountValueLabel" text="0" styleClass="number-value"/>
+                                        <Label text="Playlists created" styleClass="number-caption"/>
+                                    </VBox>
+                                </HBox>
+                            </VBox>
+                        </HBox>
                                         <Label text="Playlists created" styleClass="number-caption"/>
                                     </VBox>
                                 </HBox>

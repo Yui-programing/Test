@@ -105,21 +105,46 @@ public class RequestDispatcher {
                     return Response.success(request, data);
                 }
                 case GET_PROFILE: {
-                    // Tạm thời lấy username từ field hoặc session
-                    String username = request.getData().path("username").asText("");
-                    UserData data = authService.getProfile(username);
+                    String username = (request.getData() != null && request.getData().has("username"))
+                            ? request.getData().path("username").asText("")
+                            : "";
+                    UserData data;
+                    if (!username.isBlank()) {
+                        data = authService.getProfile(username);
+                    } else if (userId != null) {
+                        data = authService.getProfileById(userId);
+                    } else {
+                        return Response.error(request, Status.UNAUTHORIZED, "Bạn chưa đăng nhập");
+                    }
                     return Response.success(request, data);
                 }
                 case UPDATE_PROFILE: {
-                    String username = request.getData().path("username").asText("");
+                    String username = (request.getData() != null && request.getData().has("username"))
+                            ? request.getData().path("username").asText("")
+                            : "";
                     EditProfilePayload payload = request.dataAs(EditProfilePayload.class);
-                    UserData data = authService.updateProfile(username, payload);
+                    UserData data;
+                    if (!username.isBlank()) {
+                        data = authService.updateProfile(username, payload);
+                    } else if (userId != null) {
+                        data = authService.updateProfileById(userId, payload);
+                    } else {
+                        return Response.error(request, Status.UNAUTHORIZED, "Bạn chưa đăng nhập");
+                    }
                     return Response.success(request, data);
                 }
                 case CHANGE_PASSWORD: {
-                    String username = request.getData().path("username").asText("");
+                    String username = (request.getData() != null && request.getData().has("username"))
+                            ? request.getData().path("username").asText("")
+                            : "";
                     ChangePasswordProfilePayload payload = request.dataAs(ChangePasswordProfilePayload.class);
-                    authService.changePassword(username, payload);
+                    if (!username.isBlank()) {
+                        authService.changePassword(username, payload);
+                    } else if (userId != null) {
+                        authService.changePasswordById(userId, payload);
+                    } else {
+                        return Response.error(request, Status.UNAUTHORIZED, "Bạn chưa đăng nhập");
+                    }
                     return Response.success(request, "Đổi mật khẩu thành công");
                 }
 

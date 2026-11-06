@@ -70,24 +70,22 @@ public class UserRepository {
     }
 
     // tim theo id user_id
-    // public Optional<Users> findById(Long userId) {
-    // String sql = "SELECT * FROM USERS WHERE user_id = ?";
-    // try (Connection conn = DatabaseConfig.getConnection();
-    // PreparedStatement ps = conn.prepareStatement(sql)) {
-    // ps.setLong(1, userId);
-    // try (ResultSet rs = ps.executeQuery()) {
-    // if (rs.next()) {
-    // return Optional.of(mapResultSetToUser(rs));
-    // }
-    // }
-    // return Optional.empty();
-    // } catch (SQLException e) {
-    // log.error("Lỗi truy vấn CSDL khi tìm user [{}]: {}", userId, e.getMessage(),
-    // e);
-    // // Ném lỗi hạ tầng ra ngoài cho Service biết!
-    // throw new DataException("Lỗi truy vấn CSDL khi tìm user " + userId, e);
-    // }
-    // }
+    public Optional<Users> findById(Long userId) {
+        String sql = "SELECT * FROM USERS WHERE user_id = ?";
+        try (Connection conn = DatabaseConfig.getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setLong(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return Optional.of(mapResultSetToUser(rs));
+                }
+            }
+            return Optional.empty();
+        } catch (SQLException e) {
+            log.error("Lỗi truy vấn CSDL khi tìm user [{}]: {}", userId, e.getMessage(), e);
+            throw new DataException("Lỗi truy vấn CSDL khi tìm user " + userId, e);
+        }
+    }
 
     // Kiem tra user co ton tai chua
     public boolean existsByUsername(String username) {

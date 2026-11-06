@@ -69,7 +69,7 @@
                                         <Label text="What everyone is looking for" styleClass="section-subtitle"/>
                                     </VBox>
                                     <Region HBox.hgrow="ALWAYS"/>
-                                    <Button text="See all  →" onAction="#handleNavPlaceholder" styleClass="section-link"/>
+                                    <Button text="See all  →" onAction="#handleGoToTrending" styleClass="section-link"/>
                                 </HBox>
                                 <VBox styleClass="popular-list">
                                     </VBox>

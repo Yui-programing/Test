@@ -36,8 +36,8 @@
                                     <Group scaleX="0.68" scaleY="0.68"><SVGPath content="M9 18V5l12-2v13 M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0z M21 16a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" styleClass="stat-svg"/></Group>
                                 </StackPane>
                                 <Label text="MOST SEARCHED SONG" styleClass="metric-label"/>
-                                <Label text="" styleClass="metric-title"/>
-                                <Label text="" styleClass="metric-subtitle"/>
+                                <Label fx:id="topSongTitleLabel" text="Loading..." styleClass="metric-title"/>
+                                <Label fx:id="topSongArtistLabel" text="" styleClass="metric-subtitle"/>
                             </VBox>
 
                             <VBox spacing="8" HBox.hgrow="ALWAYS" maxWidth="Infinity" styleClass="stat-card">
@@ -45,20 +45,20 @@
                                     <Group scaleX="0.68" scaleY="0.68"><SVGPath content="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2 M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" styleClass="stat-svg"/></Group>
                                 </StackPane>
                                 <Label text="MOST SEARCHED ARTIST" styleClass="metric-label"/>
-                                <Label text="" styleClass="metric-title"/>
-                                <Label text="" styleClass="metric-subtitle"/>
+                                <Label fx:id="topArtistNameLabel" text="Loading..." styleClass="metric-title"/>
+                                <Label fx:id="topArtistDetailLabel" text="" styleClass="metric-subtitle"/>
                             </VBox>
 
                             <VBox spacing="8" HBox.hgrow="ALWAYS" maxWidth="Infinity" styleClass="stat-card">
                                 <StackPane prefWidth="38" prefHeight="38" maxWidth="38" maxHeight="38" styleClass="stat-icon, stat-icon-blue">
                                     <Group scaleX="0.68" scaleY="0.68"><SVGPath content="M22 7l-8.5 8.5-5-5L2 17 M16 7h6v6" styleClass="stat-svg"/></Group>
                                 </StackPane>
-                                <Label text="TOTAL SEARCHES TODAY" styleClass="metric-label"/>
+                                <Label text="TOTAL SEARCHES" styleClass="metric-label"/>
                                 <HBox alignment="BASELINE_LEFT" spacing="8">
-                                    <Label text="" styleClass="metric-big-number"/>
-                                    <Label text="" styleClass="metric-up"/>
+                                    <Label fx:id="totalSearchesLabel" text="--" styleClass="metric-big-number"/>
+                                    <Label text="active" styleClass="metric-up"/>
                                 </HBox>
-                                <Label text="" styleClass="metric-subtitle"/>
+                                <Label text="Across all songs &amp; artists" styleClass="metric-subtitle"/>
                             </VBox>
                         </HBox>
 
@@ -66,8 +66,8 @@
                             <VBox GridPane.columnIndex="0" GridPane.rowIndex="0" spacing="7" styleClass="panel-card">
                                 <Label text="Top searched songs" styleClass="panel-title"/>
                                 <Label text="Most popular this week" styleClass="panel-subtitle"/>
-
-                                </VBox>
+                                <VBox fx:id="topSongsContainer" spacing="6"/>
+                            </VBox>
 
                             <VBox GridPane.columnIndex="1" GridPane.rowIndex="0" spacing="4" styleClass="panel-card, chart-panel">
                                 <Label text="Search trends" styleClass="panel-title"/>
@@ -77,7 +77,7 @@
                                         <NumberAxis lowerBound="1" upperBound="7" tickUnit="1" autoRanging="false" tickLabelsVisible="false" tickMarkVisible="false" minorTickVisible="false"/>
                                     </xAxis>
                                     <yAxis>
-                                        <NumberAxis lowerBound="2.5" upperBound="10" tickUnit="2.5" autoRanging="false" tickLabelsVisible="false" tickMarkVisible="false" minorTickVisible="false"/>
+                                        <NumberAxis lowerBound="0" upperBound="100" tickUnit="20" autoRanging="true" tickLabelsVisible="false" tickMarkVisible="false" minorTickVisible="false"/>
                                     </yAxis>
                                 </LineChart>
                                 <HBox alignment="CENTER" spacing="31" styleClass="day-label-row">
@@ -94,10 +94,14 @@
                             <VBox GridPane.columnIndex="0" GridPane.rowIndex="1" spacing="7" styleClass="panel-card, lower-panel">
                                 <Label text="Top artists" styleClass="panel-title"/>
                                 <Label text="Searches by artist" styleClass="panel-subtitle"/>
-                                </VBox>
+                                <VBox fx:id="topArtistsContainer" spacing="6"/>
+                            </VBox>
 
                             <VBox GridPane.columnIndex="1" GridPane.rowIndex="1" spacing="8" styleClass="panel-card, lower-panel">
                                 <Label text="This week's ranking" styleClass="panel-title"/>
+                                <VBox fx:id="rankingsContainer" spacing="6"/>
+                            </VBox>
+                        </GridPane>
                                 </VBox>
                         </GridPane>
                     </VBox>

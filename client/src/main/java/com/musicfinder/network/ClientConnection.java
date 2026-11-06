@@ -53,7 +53,11 @@ public class ClientConnection {
     public void send(Request request, Consumer<Response> callback) throws IOException {
 
         if (!isConnected()) {
-            throw new IOException("Client chưa kết nối tới server");
+            try {
+                connect("localhost", 12345);
+            } catch (Exception e) {
+                throw new IOException("Client chưa kết nối tới server (port 12345): " + e.getMessage());
+            }
         }
         pendingRequest.put(request.getRequestId(), callback);
 

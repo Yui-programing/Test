@@ -79,25 +79,43 @@ public class AuthService {
     // Lấy thông tin profile
     public UserData getProfile(String username) {
         Users user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new IllegalArgumentException("Người dùng không tồn tại" + username));
+                .orElseThrow(() -> new IllegalArgumentException("Người dùng không tồn tại: " + username));
+        return DtoMapper.toUserData(user);
+    }
+
+    public UserData getProfileById(Long userId) {
+        Users user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Người dùng không tồn tại"));
         return DtoMapper.toUserData(user);
     }
 
     // Cập nhật hồ sơ
     public UserData updateProfile(String username, EditProfilePayload payload) {
         Users user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new IllegalArgumentException("Người dùng không tồn tại" + username));
-        if (payload.fullName() != null && !payload.fullName().isBlank()) {
-            user.setFullName(payload.fullName().trim());
-        }
-        if (payload.email() != null && !payload.email().isBlank()) {
-            String newEmail = payload.email();
-            if (userRepository.existByEmail(newEmail) && !newEmail.equals(user.getEmail()))
-                throw new IllegalArgumentException("Email đã tồn tại!");
-            user.setEmail(newEmail);
-        }
-        if (payload.avatarUrl() != null) {
-            user.setAvatarUrl(payload.avatarUrl().trim());
+                .orElseThrow(() -> new IllegalArgumentException("Người dùng không tồn tại: " + username));
+        return applyUpdateProfile(user, payload);
+    }
+
+    public UserData updateProfileById(Long userId, EditProfilePayload payload) {
+        Users user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Người dùng không tồn tại"));
+        return applyUpdateProfile(user, payload);
+    }
+
+    private UserData applyUpdateProfile(Users user, EditProfilePayload payload) {
+        if (payload != null) {
+            if (payload.fullName() != null && !payload.fullName().isBlank()) {
+                user.setFullName(payload.fullName().trim());
+            }
+            if (payload.email() != null && !payload.email().isBlank()) {
+                String newEmail = payload.email().trim();
+                if (userRepository.existByEmail(newEmail) && !newEmail.equals(user.getEmail()))
+                    throw new IllegalArgumentException("Email đã tồn tại!");
+                user.setEmail(newEmail);
+            }
+            if (payload.avatarUrl() != null) {
+                user.setAvatarUrl(payload.avatarUrl().trim());
+            }
         }
         userRepository.update(user);
         return DtoMapper.toUserData(user);
@@ -105,18 +123,37 @@ public class AuthService {
 
     // Đổi mật khẩu
     public boolean changePassword(String username, ChangePasswordProfilePayload payload) {
+        validateChangePasswordPayload(payload);
+        Users user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy người dùng " + username));
+        return applyChangePassword(user, payload);
+    }
+
+    public boolean changePasswordById(Long userId, ChangePasswordProfilePayload payload) {
+        validateChangePasswordPayload(payload);
+        Users user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy người dùng"));
+        return applyChangePassword(user, payload);
+    }
+
+    private void validateChangePasswordPayload(ChangePasswordProfilePayload payload) {
+        if (payload == null) {
+            throw new IllegalArgumentException("Dữ liệu đổi mật khẩu không hợp lệ");
+        }
         String newPassword = payload.password();
         if (newPassword == null || newPassword.trim().length() < 6) {
             throw new IllegalArgumentException("Mật khẩu mới phải có ít nhất 6 ký tự!");
         }
-        Users user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy người dùng " + username));
+    }
+
+    private boolean applyChangePassword(Users user, ChangePasswordProfilePayload payload) {
+        String newPassword = payload.password();
         String newHash = PasswordHash.hashPassword(newPassword.trim());
 
         // cập nhật vào DB
         boolean updated = userRepository.updatePassword(user.getUserId(), newHash);
         if (updated)
-            log.info("Người dùng [{}] đã đổi mật khẩu thành công ", username);
+            log.info("Người dùng [{}] đã đổi mật khẩu thành công ", user.getUsername());
         return updated;
     }
 

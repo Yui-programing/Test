@@ -47,11 +47,11 @@
 
                         <VBox spacing="5">
                             <Label text="Your collections" styleClass="section-title"/>
-                            <Label text="" styleClass="section-subtitle"/>
+                            <Label fx:id="collectionsCountLabel" text="0 collections" styleClass="section-subtitle"/>
                         </VBox>
 
-                        <HBox spacing="18" alignment="TOP_LEFT">
-                            </HBox>
+                        <javafx.scene.layout.FlowPane fx:id="playlistsContainer" hgap="18" vgap="18" alignment="TOP_LEFT">
+                        </javafx.scene.layout.FlowPane>
                     </VBox>
                 </content>
             </ScrollPane>
